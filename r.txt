@@ -1,0 +1,31 @@
+.patch((req, res) => {
+    const id = req.params.id;
+    const updateUser = req.body;
+    const foundIndex = user.findIndex((user) => user.id == id);
+    if (foundIndex === -1) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    user[foundIndex] = { ...user[foundIndex], ...updateUser };
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(user), (err, data) => {
+      if (err) {
+        console.error("Error writing to file:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      return res.json({ status: "success", id: id });
+    });
+  })
+  .delete((req, res) => {
+    const id = req.params.id;
+    const foundIndex = user.findIndex((user) => user.id == id);
+    if (foundIndex === -1) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    user.splice(foundIndex, 1);
+    fs.writeFile("./MOCK_DATA.json", JSON.stringify(user), (err, data) => {
+      if (err) {
+        console.error("Error writing to file:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      return res.json({ status: "success", id: id });
+    });
+  });
