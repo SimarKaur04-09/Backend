@@ -11,6 +11,10 @@ function logReqRes(filename){
         });
         next();
 
+next()
+
+
+
       }
 }
 module.exports={logReqRes}
